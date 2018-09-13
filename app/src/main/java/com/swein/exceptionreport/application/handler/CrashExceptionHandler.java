@@ -3,8 +3,8 @@ package com.swein.exceptionreport.application.handler;
 import android.content.Context;
 import android.os.Looper;
 
-import com.swein.exceptionreport.constants.EConstants;
 import com.swein.exceptionreport.controller.ExceptionReportController;
+import com.swein.exceptionreport.controller.gateway.email.ExceptionEmailGateway;
 
 /**
  * Created by seokho on 23/11/2016.
@@ -87,7 +87,7 @@ public class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
          * here will send exception crash report.
          */
 
-        ExceptionReportController exceptionReportController = new ExceptionReportController(context, EConstants.REPORT_WAY.EMAIL);
+        ExceptionReportController exceptionReportController = new ExceptionReportController(context, new ExceptionEmailGateway(context));
         exceptionReportController.setReport(exception);
 
         return true;

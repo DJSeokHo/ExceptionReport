@@ -2,10 +2,7 @@ package com.swein.exceptionreport.controller;
 
 import android.content.Context;
 
-import com.swein.exceptionreport.constants.EConstants;
 import com.swein.exceptionreport.controller.gateway.ExceptionGatewayDelegate;
-import com.swein.exceptionreport.controller.gateway.email.ExceptionEmailGateway;
-import com.swein.exceptionreport.controller.gateway.webapi.ExceptionWebAPIGateway;
 import com.swein.exceptionreport.model.ExceptionModel;
 import com.swein.exceptionreport.util.appinfo.AppInfoUtil;
 import com.swein.exceptionreport.util.date.DateUtil;
@@ -20,20 +17,11 @@ public class ExceptionReportController {
     private ExceptionGatewayDelegate exceptionGatewayDelegate;
     private Context context;
 
-    public ExceptionReportController(Context context, EConstants.REPORT_WAY reportWay) {
+    public ExceptionReportController(Context context, ExceptionGatewayDelegate exceptionGatewayDelegate) {
 
         this.context = context;
+        this.exceptionGatewayDelegate = exceptionGatewayDelegate;
 
-        switch (reportWay) {
-
-            case EMAIL:
-                exceptionGatewayDelegate = new ExceptionEmailGateway(this.context);
-                break;
-
-            case WEB_API:
-                exceptionGatewayDelegate = new ExceptionWebAPIGateway();
-                break;
-        }
     }
 
     public void setReport(Throwable e) {

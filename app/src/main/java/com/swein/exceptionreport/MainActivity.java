@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.swein.exceptionreport.constants.EConstants;
 import com.swein.exceptionreport.controller.ExceptionReportController;
+import com.swein.exceptionreport.controller.gateway.email.ExceptionEmailGateway;
 import com.swein.exceptionreport.util.dialog.DialogUtil;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 
     private void sendExceptionReport() {
 
-        final ExceptionReportController exceptionReportController = new ExceptionReportController(this, EConstants.REPORT_WAY.EMAIL);
+        final ExceptionReportController exceptionReportController = new ExceptionReportController(this, new ExceptionEmailGateway(this));
 
         DialogUtil.createNormalDialogWithTwoButton(MainActivity.this, "오류 보고", "오류 정보를 이메일으로 개발자에게 보내시겠습니까?", false, "네", "아니요",
                 new DialogInterface.OnClickListener() {
@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
         }
         catch (Exception e) {
 
-            final ExceptionReportController exceptionReportController = new ExceptionReportController(this, EConstants.REPORT_WAY.EMAIL);
+            final ExceptionReportController exceptionReportController = new ExceptionReportController(this, new ExceptionEmailGateway(this));
             exceptionReportController.setReport(e);
 
         }
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
         StackTraceElement[] stackTraceElements = new Throwable().getStackTrace();
         StackTraceElement stackTraceElement = stackTraceElements[0];
 
-        final ExceptionReportController exceptionReportController = new ExceptionReportController(this, EConstants.REPORT_WAY.EMAIL);
+        final ExceptionReportController exceptionReportController = new ExceptionReportController(this, new ExceptionEmailGateway(this));
         exceptionReportController.setReport(stackTraceElement.getClassName(), String.valueOf(stackTraceElement.getLineNumber()), stackTraceElement.getMethodName(), "SystemOid is wrong");
 
 
