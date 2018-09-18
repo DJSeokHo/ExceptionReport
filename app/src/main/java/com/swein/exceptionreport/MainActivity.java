@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 
         final ExceptionReportController exceptionReportController = new ExceptionReportController(this, new ExceptionEmailGateway(this));
 
-        DialogUtil.createNormalDialogWithTwoButton(MainActivity.this, "오류 보고", "오류 정보를 이메일으로 개발자에게 보내시겠습니까?", false, "네", "아니요",
+        DialogUtil.createNormalDialogWithTwoButton(MainActivity.this, "app name  오류 보고", "오류 정보를 이메일으로 개발자에게 보내시겠습니까?", false, "네", "아니요",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
