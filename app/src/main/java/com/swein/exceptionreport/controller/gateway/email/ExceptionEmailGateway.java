@@ -32,7 +32,7 @@ public class ExceptionEmailGateway implements ExceptionGatewayDelegate {
     public void sendReport() {
 
         ERSQLiteController ersqLiteController = new ERSQLiteController(context);
-        List<ExceptionModel> exceptionModelList = ersqLiteController.getData(0, 30);
+        List<ExceptionModel> exceptionModelList = ersqLiteController.getData(0, 10);
 
         if(0 == exceptionModelList.size()) {
 
