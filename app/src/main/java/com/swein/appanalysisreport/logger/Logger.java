@@ -94,7 +94,7 @@ public class Logger {
         );
         saveAppAnalysisIntoDB(appAnalysisData);
 
-        return ((OperationData) appAnalysisData).getUuid();
+        return ((OperationData) appAnalysisData).uuid;
     }
 
     public void sendAppAnalysisReportByEmail(Context context, boolean anonymous, String userID) {

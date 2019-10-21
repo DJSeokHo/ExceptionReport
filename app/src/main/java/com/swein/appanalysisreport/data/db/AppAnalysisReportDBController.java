@@ -194,12 +194,12 @@ public class AppAnalysisReportDBController extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(TABLE_COL_UUID, operationData.getUuid());
-            contentValues.put(TABLE_COL_DATE_TIME, operationData.getDateTime());
-            contentValues.put(TABLE_COL_LOCATION, operationData.getLocation());
-            contentValues.put(TABLE_COL_OPERATION_TYPE, operationData.getOperationType());
-            contentValues.put(TABLE_COL_EVENT_GROUP, operationData.getEventGroup());
-            contentValues.put(TABLE_COL_NOTE, operationData.getNote());
+            contentValues.put(TABLE_COL_UUID, operationData.uuid);
+            contentValues.put(TABLE_COL_DATE_TIME, operationData.dateTime);
+            contentValues.put(TABLE_COL_LOCATION, operationData.location);
+            contentValues.put(TABLE_COL_OPERATION_TYPE, operationData.getOperationTypeString(operationData.operationType));
+            contentValues.put(TABLE_COL_EVENT_GROUP, operationData.eventGroup);
+            contentValues.put(TABLE_COL_NOTE, operationData.note);
 
             db.replace(OPERATION_REPORT_TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
@@ -273,13 +273,13 @@ public class AppAnalysisReportDBController extends SQLiteOpenHelper {
 
             db.beginTransaction();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(TABLE_COL_UUID, exceptionData.getUuid());
-            contentValues.put(TABLE_COL_DATE_TIME, exceptionData.getDateTime());
-            contentValues.put(TABLE_COL_LOCATION, exceptionData.getLocation());
-            contentValues.put(TABLE_COL_MESSAGE, exceptionData.getExceptionMessage());
-            contentValues.put(TABLE_COL_EVENT_GROUP, exceptionData.getEventGroup());
-            contentValues.put(TABLE_COL_OPERATION_RELATE_ID, exceptionData.getOperationRelateID());
-            contentValues.put(TABLE_COL_NOTE, exceptionData.getNote());
+            contentValues.put(TABLE_COL_UUID, exceptionData.uuid);
+            contentValues.put(TABLE_COL_DATE_TIME, exceptionData.dateTime);
+            contentValues.put(TABLE_COL_LOCATION, exceptionData.location);
+            contentValues.put(TABLE_COL_MESSAGE, exceptionData.exceptionMessage);
+            contentValues.put(TABLE_COL_EVENT_GROUP, exceptionData.eventGroup);
+            contentValues.put(TABLE_COL_OPERATION_RELATE_ID, exceptionData.operationRelateID);
+            contentValues.put(TABLE_COL_NOTE, exceptionData.note);
 
             db.replace(EXCEPTION_REPORT_TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
@@ -338,12 +338,12 @@ public class AppAnalysisReportDBController extends SQLiteOpenHelper {
 
             db.beginTransaction();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(TABLE_COL_DEVICE_UUID, deviceUserData.getDeviceUUID());
-            contentValues.put(TABLE_COL_DEVICE_MODEL, deviceUserData.getDeviceModel());
-            contentValues.put(TABLE_COL_OS_VERSION, deviceUserData.getOsVersion());
-            contentValues.put(TABLE_COL_APP_NAME, deviceUserData.getAppName());
-            contentValues.put(TABLE_COL_APP_VERSION, deviceUserData.getAppVersion());
-            contentValues.put(TABLE_COL_OTHER, deviceUserData.getOther());
+            contentValues.put(TABLE_COL_DEVICE_UUID, deviceUserData.deviceUUID);
+            contentValues.put(TABLE_COL_DEVICE_MODEL, deviceUserData.deviceModel);
+            contentValues.put(TABLE_COL_OS_VERSION, deviceUserData.osVersion);
+            contentValues.put(TABLE_COL_APP_NAME, deviceUserData.appName);
+            contentValues.put(TABLE_COL_APP_VERSION, deviceUserData.appVersion);
+            contentValues.put(TABLE_COL_OTHER, deviceUserData.other);
 
             db.replace(DEVICE_USER_TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();

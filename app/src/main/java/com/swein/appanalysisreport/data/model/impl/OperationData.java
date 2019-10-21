@@ -94,7 +94,7 @@ public class OperationData implements AppAnalysisData {
     /**
      * 根据 操作类别 获取 操作类别字符串
      */
-    private String getOperationTypeString(LoggerProperty.OPERATION_TYPE operationType) {
+    public String getOperationTypeString(LoggerProperty.OPERATION_TYPE operationType) {
         switch (operationType) {
             case CLICK:
                 return LoggerProperty.OPERATION_CLICK;
