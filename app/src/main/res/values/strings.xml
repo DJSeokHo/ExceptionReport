@@ -1,3 +1,13 @@
 <resources>
+
     <string name="app_name">ExceptionReport</string>
+
+    <string name="alert_title">%s 异常报告</string>
+    <string name="alert_message">确定讲通过邮件把发送错误日志发送给开发者吗？</string>
+    <string name="alert_confirm">确定</string>
+    <string name="alert_cancel">取消</string>
+
+
+    <string name="send_exception_report">发送异常报告</string>
+
 </resources>

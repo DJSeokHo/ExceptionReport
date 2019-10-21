@@ -3,8 +3,7 @@ package com.swein.exceptionreport.util.date;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtil
-{
+public class DateUtil {
 
     public static String getCurrentDateTimeString() {
 

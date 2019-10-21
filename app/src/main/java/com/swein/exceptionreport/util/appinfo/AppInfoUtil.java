@@ -5,10 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-/**
- * Created by seokho on 29/03/2017.
- */
-
 public class AppInfoUtil {
 
     public static String getVersionName(Context context)
