@@ -2,12 +2,18 @@
 
     <string name="app_name">ExceptionReport</string>
 
-    <string name="alert_title">%s 异常报告</string>
-    <string name="alert_message">确定讲通过邮件把发送错误日志发送给开发者吗？</string>
-    <string name="alert_confirm">确定</string>
+    <string name="alert_title">异常报告</string>
+    <string name="alert_message">将要发送异常报告给开发者，需要附加您的用户名吗？</string>
+    <string name="send_with_id">包含用户名</string>
+    <string name="send_without_id">去掉用户名</string>
     <string name="alert_cancel">取消</string>
 
 
     <string name="send_exception_report">发送异常报告</string>
 
+    <string name="login_do_login">登录</string>
+    <string name="login_hint_id">用户名</string>
+    <string name="login_hint_pw">密码</string>
+    <string name="login_send_email">发送异常报告(邮件方式)</string>
+    <string name="login_reset">清除异常报告</string>
 </resources>
