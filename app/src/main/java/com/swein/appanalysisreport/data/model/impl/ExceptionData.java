@@ -6,26 +6,33 @@ import com.swein.appanalysisreport.util.uuid.UUIDUtil;
 
 public class ExceptionData implements AppAnalysisData {
 
-    private String uuid = "";
+    private final static String DATE_TIME_TITLE = "异常发生的时间: ";
+    private final static String LOCATION_TITLE = "异常发生的位置: ";
+    private final static String MESSAGE_TITLE = "异常信息: ";
+    private final static String EVENT_GROUP_TITLE = "事件组: ";
+    private final static String OPERATION_RELATE_ID_TITLE = "用户行为: ";
+    private final static String NOTE_TITLE = "备注: ";
 
-    /* 시간 */
-    private String dateTime = "";
+    /* 记录的uuid */
+    public String uuid = "";
 
-    /* 오류 발생하는 파일명 */
-    /* 오류 발생하는 메소드명 */
-    /* 오류 발생하는 line 번호 */
-    private String location = "";
+    /* 时间 */
+    public String dateTime = "";
 
-    /* 오류 메시지 */
-    private String exceptionMessage = "";
+    /* 异常发生的文件名，方法名，行号 */
+    public String location = "";
 
-    private String eventGroup = "";
+    /* 异常信息 */
+    public String exceptionMessage = "";
 
-    /* uuid relate */
-    private String operationRelateID = "";
+    /* 事件组 */
+    public String eventGroup = "";
 
-    /* 기타정보 */
-    private String note = "";
+    /* 这条异常发生时的相关用户操作 */
+    public String operationRelateID = "";
+
+    /* 备注 */
+    public String note = "";
 
     public ExceptionData(String location, String exceptionMessage, String eventGroup, String operationRelateID, String note) {
         this.uuid = UUIDUtil.getUUIDString();
@@ -47,34 +54,6 @@ public class ExceptionData implements AppAnalysisData {
         this.note = note;
     }
 
-    public String getOperationRelateID() {
-        return operationRelateID;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public String getExceptionMessage() {
-        return exceptionMessage;
-    }
-
-    public String getEventGroup() {
-        return eventGroup;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
     @Override
     public String toString() {
         return uuid + " " + dateTime + " " + location + " " + exceptionMessage + " " + eventGroup + " " + operationRelateID + " " + note;
@@ -83,19 +62,12 @@ public class ExceptionData implements AppAnalysisData {
     @Override
     public String toReport() {
 
-        return DATE_TIME_KEY + dateTime + "\n" +
-                LOCATION_KEY + location + "\n" +
-                MESSAGE_KEY + exceptionMessage + "\n" +
-                NOTE_KEY + note + "\n" +
-                OPERATION_RELATE_ID_KEY + operationRelateID + "\n" +
-                EVENT_GROUP_KEY + eventGroup;
+        return DATE_TIME_TITLE + dateTime + "\n" +
+                LOCATION_TITLE + location + "\n" +
+                MESSAGE_TITLE + exceptionMessage + "\n" +
+                NOTE_TITLE + note + "\n" +
+                OPERATION_RELATE_ID_TITLE + operationRelateID + "\n" +
+                EVENT_GROUP_TITLE + eventGroup;
     }
-
-    private final static String DATE_TIME_KEY = "오류 발생 일시: ";
-    private final static String LOCATION_KEY = "오류 발생한 위치: ";
-    private final static String MESSAGE_KEY = "오류 발생한 정보: ";
-    private final static String EVENT_GROUP_KEY = "이벤트 그룹: ";
-    private final static String OPERATION_RELATE_ID_KEY = "사용자 행위: ";
-    private final static String NOTE_KEY = "비고: ";
 
 }

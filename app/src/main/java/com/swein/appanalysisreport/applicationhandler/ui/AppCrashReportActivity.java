@@ -21,25 +21,40 @@ public class AppCrashReportActivity extends Activity {
 
     private Button buttonResetDB;
 
+    private String message = "";
+    private String location = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_crash_report);
 
-
-        String message = getIntent().getStringExtra("message");
-        String location = getIntent().getStringExtra("location");
+        checkBundle();
+        findView();
+        setListener();
 
         Logger.getInstance().trackException(location, message, LoggerProperty.EVENT_GROUP_CRASH, "", LoggerProperty.EVENT_GROUP_CRASH);
+    }
 
+    private void checkBundle() {
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        if(bundle != null) {
+            message = getIntent().getStringExtra("message");
+            location = getIntent().getStringExtra("location");
+        }
+    }
+
+    private void findView() {
         buttonExit = findViewById(R.id.buttonExit);
         buttonSendExceptionEmail = findViewById(R.id.buttonSendExceptionEmail);
-
         buttonResetDB = findViewById(R.id.buttonResetDB);
+    }
+
+    private void setListener() {
         buttonResetDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Logger.getInstance().clear();
+                Logger.getInstance().clear();
             }
         });
 
@@ -65,7 +80,6 @@ public class AppCrashReportActivity extends Activity {
                                 Logger.getInstance().sendAppAnalysisReportByEmail(AppCrashReportActivity.this, true, Constants.TEST_USER_ID);
                             }
                         });
-
             }
         });
 

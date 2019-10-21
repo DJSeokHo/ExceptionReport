@@ -1,4 +1,4 @@
-package com.swein.appanalysisreport.demo.example.home;
+package com.swein.appanalysisreport.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,17 +11,16 @@ import com.swein.appanalysisreport.util.debug.log.ILog;
 import com.swein.appanalysisreport.util.thread.ThreadUtil;
 import com.swein.appanalysisreport.util.toast.ToastUtil;
 
-public class AppAnalysisExampleHomeActivity extends Activity {
+public class AppAnalysisHomeDemoActivity extends Activity {
 
-    private final static String TAG = "AppAnalysisExampleHomeActivity";
+    private final static String TAG = "AppAnalysisHomeDemoActivity";
 
     private String operationRelateID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_analysis_example_home);
-
+        setContentView(R.layout.activity_app_analysis_home_demo);
 
         Logger.getInstance().trackOperation(
                 LoggerParser.getLocationFromThrowable(new Throwable()),
@@ -31,14 +30,6 @@ public class AppAnalysisExampleHomeActivity extends Activity {
         );
 
         autoStartSomeMethod();
-
-        ThreadUtil.startUIThread(2000, new Runnable() {
-            @Override
-            public void run() {
-
-                finish();
-            }
-        });
     }
 
     private void autoStartSomeMethod() {
@@ -66,13 +57,13 @@ public class AppAnalysisExampleHomeActivity extends Activity {
                             LoggerParser.getExceptionMessage(throwable),
                             LoggerProperty.EVENT_GROUP_REQUEST_API,
                             operationRelateID,
-                            "check api success or not"
+                            ""
                     );
 
                     ThreadUtil.startUIThread(100, new Runnable() {
                         @Override
                         public void run() {
-                            ToastUtil.showShortToastNormal(AppAnalysisExampleHomeActivity.this, "초기화 오류");
+                            ToastUtil.showShortToastNormal(AppAnalysisHomeDemoActivity.this, getString(R.string.home_init_error));
                         }
                     });
                 }
@@ -84,12 +75,16 @@ public class AppAnalysisExampleHomeActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-
+        Logger.getInstance().trackOperation(
+                LoggerParser.getLocationFromThrowable(new Throwable()),
+                LoggerProperty.EVENT_GROUP_CHANGE_SCREEN,
+                LoggerProperty.OPERATION_TYPE.NONE,
+                ""
+        );
         super.onDestroy();
     }
 
     public void onBackPressed() {
-
-        return;
+        finish();
     }
 }

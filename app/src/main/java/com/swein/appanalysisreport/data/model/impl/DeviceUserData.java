@@ -5,25 +5,32 @@ import com.swein.appanalysisreport.data.model.AppAnalysisData;
 
 public class DeviceUserData implements AppAnalysisData {
 
-    /* 기기 UUID */
-    private String deviceUUID = "";
+    private final static String DEVICE_UUID_TITLE = "手机的 UUID: ";
+    private final static String DEVICE_MODEL_TITLE = "手机型号: ";
+    private final static String OS_VERSION_TITLE = "系统版本: ";
+    private final static String APP_NAME_TITLE = "App名字: ";
+    private final static String APP_VERSION_TITLE = "App版本: ";
+    private final static String OTHER_TITLE = "备注: ";
 
-    /* 기기 모델 */
-    private String deviceModel = "";
+    /* 手机的 UUID (不变且唯一) */
+    public String deviceUUID = "";
 
-    /* OS 버전 */
-    private String osVersion = "";
+    /* 手机型号 */
+    public String deviceModel = "";
 
-    /* 앱 이름 */
-    private String appName = "";
+    /* 系统版本 */
+    public String osVersion = "";
 
-    /* 앱 버전 */
-    private String appVersion = "";
+    /* App名字 */
+    public String appName = "";
 
-    /* 기타 */
-    private String other = "";
+    /* App版本 */
+    public String appVersion = "";
 
-    
+    /* 备注 */
+    public String other = "";
+
+
     public DeviceUserData(String deviceUUID, String deviceModel, String osVersion, String appName, String appVersion, String other) {
         this.deviceUUID = deviceUUID;
         this.deviceModel = deviceModel;
@@ -31,31 +38,6 @@ public class DeviceUserData implements AppAnalysisData {
         this.appName = appName;
         this.appVersion = appVersion;
         this.other = other;
-    }
-    
-
-    public String getDeviceUUID() {
-        return deviceUUID;
-    }
-
-    public String getDeviceModel() {
-        return deviceModel;
-    }
-
-    public String getOsVersion() {
-        return osVersion;
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public String getAppVersion() {
-        return appVersion;
-    }
-
-    public String getOther() {
-        return other;
     }
 
     @Override
@@ -66,18 +48,12 @@ public class DeviceUserData implements AppAnalysisData {
     @Override
     public String toReport() {
 
-        return DEVICE_UUID_KEY + deviceUUID + "\n" +
-                DEVICE_MODEL_KEY + deviceModel + "\n" +
-                OS_VERSION_KEY + osVersion + "\n" +
-                APP_NAME_KEY + appName + "\n" +
-                APP_VERSION_KEY + appVersion + "\n" +
-                OTHER_KEY + other;
+        return DEVICE_UUID_TITLE + deviceUUID + "\n" +
+                DEVICE_MODEL_TITLE + deviceModel + "\n" +
+                OS_VERSION_TITLE + osVersion + "\n" +
+                APP_NAME_TITLE + appName + "\n" +
+                APP_VERSION_TITLE + appVersion + "\n" +
+                OTHER_TITLE + other;
     }
 
-    private final static String DEVICE_UUID_KEY = "기기 UUID: ";
-    private final static String DEVICE_MODEL_KEY = "기기 모델: ";
-    private final static String OS_VERSION_KEY = "OS 버잔: ";
-    private final static String APP_NAME_KEY = "앱 이름: ";
-    private final static String APP_VERSION_KEY = "앱 버전: ";
-    private final static String OTHER_KEY = "기타: ";
 }

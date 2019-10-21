@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.swein.appanalysisreport.applicationhandler.ui.AppCrashReportActivity;
 import com.swein.appanalysisreport.data.parser.LoggerParser;
@@ -59,8 +60,10 @@ public class CrashExceptionReportHandler implements Thread.UncaughtExceptionHand
             Intent intent = new Intent(context, AppCrashReportActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            intent.putExtra("message", LoggerParser.getExceptionMessage(exception));
-            intent.putExtra("location", LoggerParser.getLocationFromThrowable(exception));
+            Bundle bundle = new Bundle();
+            bundle.putString("message", LoggerParser.getExceptionMessage(exception));
+            bundle.putString("location", LoggerParser.getLocationFromThrowable(exception));
+            intent.putExtra("bundle", bundle);
 
             PendingIntent restartIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             if (alarmManager != null) {

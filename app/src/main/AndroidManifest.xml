@@ -11,14 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.swein.appanalysisreport.demo.example.home.AppAnalysisExampleHomeActivity" />
+        <activity android:name="com.swein.appanalysisreport.demo.AppAnalysisHomeDemoActivity"
+            android:launchMode="singleTask"/>
 
         <activity
-            android:name=".demo.example.login.AppAnalysisExampleLoginActivity"
+            android:name=".applicationhandler.ui.AppCrashReportActivity"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".demo.AppAnalysisLoginDemoActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

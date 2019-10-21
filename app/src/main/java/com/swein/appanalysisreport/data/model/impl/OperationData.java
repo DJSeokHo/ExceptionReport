@@ -8,23 +8,30 @@ import com.swein.appanalysisreport.util.uuid.UUIDUtil;
 
 public class OperationData implements AppAnalysisData {
 
-    /* uuid */
-    private String uuid = "";
+    private final static String LOCATION_TITLE = "位置: ";
+    private final static String DATE_TIME_TITLE = "时间: ";
+    private final static String OPERATION_TYPE_TITLE = "操作类型: ";
+    private final static String EVENT_GROUP_TITLE = "事件组: ";
+    private final static String NOTE_TITLE = "备注: ";
 
-    /* class file name */
-    /* 클릭한 뷰 이름 */
-    private String location = "";
 
-    /* 시간 */
-    private String dateTime = "";
+    /* 记录的uuid */
+    public String uuid = "";
 
-    /* 이벤트 그룹 */
-    private String eventGroup = "";
+    /* 位置 */
+    public String location = "";
 
-    private LoggerProperty.OPERATION_TYPE operationType = LoggerProperty.OPERATION_TYPE.NONE;
+    /* 时间 */
+    public String dateTime = "";
 
-    /* 기타정보 */
-    private String note = "";
+    /* 事件组 */
+    public String eventGroup = "";
+
+    /* 操作类型 */
+    public LoggerProperty.OPERATION_TYPE operationType = LoggerProperty.OPERATION_TYPE.NONE;
+
+    /* 备注 */
+    public String note = "";
 
     public OperationData(String location, String eventGroup, LoggerProperty.OPERATION_TYPE operationType, String note) {
         this.uuid = UUIDUtil.getUUIDString();
@@ -44,65 +51,38 @@ public class OperationData implements AppAnalysisData {
         this.note = note;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public String getOperationType() {
-        return getOperationTypeString(operationType);
-    }
-
-    public String getEventGroup() {
-        return eventGroup;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
     @Override
     public String toString() {
         return uuid + " " + location + " " + dateTime + " " + getOperationTypeString(operationType) + " " + eventGroup + " " + note;
     }
 
-    private final static String LOCATION_KEY = "위치: ";
-    private final static String DATE_TIME_KEY = "시간: ";
-    private final static String OPERATION_TYPE_KEY = "행동 방식: ";
-    private final static String EVENT_GROUP_KEY = "이벤트 그룹: ";
-    private final static String NOTE_KEY = "비고: ";
-
     @Override
     public String toReport() {
 
-        return LOCATION_KEY + location + "\n" +
-                DATE_TIME_KEY + dateTime + "\n" +
-                OPERATION_TYPE_KEY + getOperationTypeString(operationType) + "\n" +
-                EVENT_GROUP_KEY + eventGroup + "\n" +
-                NOTE_KEY + note;
+        return LOCATION_TITLE + location + "\n" +
+                DATE_TIME_TITLE + dateTime + "\n" +
+                OPERATION_TYPE_TITLE + getOperationTypeString(operationType) + "\n" +
+                EVENT_GROUP_TITLE + eventGroup + "\n" +
+                NOTE_TITLE + note;
 
     }
 
+    /**
+     * 根据 操作类别字符串 获取 操作类别
+     */
     public static LoggerProperty.OPERATION_TYPE getOperationType(String operationTypeString) {
         switch (operationTypeString) {
-            case LoggerProperty.OPERATION_C:
-                return LoggerProperty.OPERATION_TYPE.C;
+            case LoggerProperty.OPERATION_CLICK:
+                return LoggerProperty.OPERATION_TYPE.CLICK;
 
-            case LoggerProperty.OPERATION_LC:
-                return LoggerProperty.OPERATION_TYPE.LC;
+            case LoggerProperty.OPERATION_LONG_CLICK:
+                return LoggerProperty.OPERATION_TYPE.LONG_CLICK;
 
-            case LoggerProperty.OPERATION_SU:
-                return LoggerProperty.OPERATION_TYPE.SU;
+            case LoggerProperty.OPERATION_SCROLL_UP:
+                return LoggerProperty.OPERATION_TYPE.SCROLL_UP;
 
-            case LoggerProperty.OPERATION_SD:
-                return LoggerProperty.OPERATION_TYPE.SD;
+            case LoggerProperty.OPERATION_SCROLL_DOWN:
+                return LoggerProperty.OPERATION_TYPE.SCROLL_DOWN;
 
             case LoggerProperty.OPERATION_NONE:
 
@@ -111,19 +91,22 @@ public class OperationData implements AppAnalysisData {
         }
     }
 
+    /**
+     * 根据 操作类别 获取 操作类别字符串
+     */
     private String getOperationTypeString(LoggerProperty.OPERATION_TYPE operationType) {
         switch (operationType) {
-            case C:
-                return LoggerProperty.OPERATION_C;
+            case CLICK:
+                return LoggerProperty.OPERATION_CLICK;
 
-            case LC:
-                return LoggerProperty.OPERATION_LC;
+            case LONG_CLICK:
+                return LoggerProperty.OPERATION_LONG_CLICK;
 
-            case SD:
-                return LoggerProperty.OPERATION_SD;
+            case SCROLL_DOWN:
+                return LoggerProperty.OPERATION_SCROLL_DOWN;
 
-            case SU:
-                return LoggerProperty.OPERATION_SU;
+            case SCROLL_UP:
+                return LoggerProperty.OPERATION_SCROLL_UP;
 
             case NONE:
 

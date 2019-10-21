@@ -7,15 +7,6 @@
     tools:context=".applicationhandler.ui.AppCrashReportActivity"
     >
 
-    <TextView
-        android:text="앱 오류정보 담당자에게 보내시겠습니까?"
-        android:textAllCaps="false"
-        android:layout_marginTop="120dp"
-        android:textSize="7pt"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center_horizontal"
@@ -28,7 +19,7 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:textStyle="bold"
-            android:text="E-mail 으로 보내기"
+            android:text="@string/send_db_by_email"
             android:textAllCaps="false"
             android:textSize="6pt"
             android:layout_width="wrap_content"
@@ -41,7 +32,7 @@
         android:layout_marginBottom="30dp"
         android:id="@+id/buttonExit"
         android:layout_gravity="bottom|center_horizontal"
-        android:text="앱 중료"
+        android:text="@string/report_exit_app"
         android:textSize="6pt"
         android:textAllCaps="false"
         android:layout_width="wrap_content"
@@ -49,10 +40,10 @@
 
     <Button
         android:id="@+id/buttonResetDB"
-        android:text="reset DB"
+        android:text="@string/reset_db"
         android:textAllCaps="false"
         android:background="#0000"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

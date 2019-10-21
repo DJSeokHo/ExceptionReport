@@ -51,30 +51,21 @@ public class LoggerProperty {
      * 静态常量名，静态常量值，以及枚举值
      * =================================================
      */
-    public final static String OPERATION_C = "click";
-    public final static String OPERATION_LC = "long click";
-    public final static String OPERATION_SU = "scroll up";
-    public final static String OPERATION_SD = "scroll down";
+    public final static String OPERATION_CLICK = "click";
+    public final static String OPERATION_LONG_CLICK = "long click";
+    public final static String OPERATION_SCROLL_UP = "scroll up";
+    public final static String OPERATION_SCROLL_DOWN = "scroll down";
     public final static String OPERATION_NONE = "none";
-
-
-    public final static String OPERATION_LEAVE_SCREEN = "leave screen";
-    public final static String OPERATION_ENTER_SCREEN = "enter screen";
-
-
-    public final static String OPERATION_BACKGROUND = "background";
-    public final static String OPERATION_FOREGROUND = "foreground";
-
 
     public enum OPERATION_TYPE {
         /*
             NONE: none (default)
-            SU: Scroll Up
-            SD: Scroll Down
-            C: Click
-            LC: Long Click
+            SCROLL_UP: Scroll Up
+            SCROLL_DOWN: Scroll Down
+            CLICK: Click
+            LONG_CLICK: Long Click
         */
-        SU, SD, C, LC, NONE
+        SCROLL_UP, SCROLL_DOWN, CLICK, LONG_CLICK, NONE
     }
     // =================================================
 

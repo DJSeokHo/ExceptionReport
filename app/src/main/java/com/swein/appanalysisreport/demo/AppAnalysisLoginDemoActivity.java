@@ -1,4 +1,4 @@
-package com.swein.appanalysisreport.demo.example.login;
+package com.swein.appanalysisreport.demo;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -11,14 +11,13 @@ import android.widget.EditText;
 import com.swein.appanalysisreport.R;
 import com.swein.appanalysisreport.constants.Constants;
 import com.swein.appanalysisreport.data.parser.LoggerParser;
-import com.swein.appanalysisreport.demo.example.home.AppAnalysisExampleHomeActivity;
 import com.swein.appanalysisreport.logger.Logger;
 import com.swein.appanalysisreport.loggerproperty.LoggerProperty;
 import com.swein.appanalysisreport.util.dialog.DialogUtil;
 import com.swein.appanalysisreport.util.thread.ThreadUtil;
 import com.swein.appanalysisreport.util.toast.ToastUtil;
 
-public class AppAnalysisExampleLoginActivity extends Activity {
+public class AppAnalysisLoginDemoActivity extends Activity {
 
     private EditText editTextID;
     private EditText editTextPassword;
@@ -32,7 +31,7 @@ public class AppAnalysisExampleLoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_analysis_example_login);
+        setContentView(R.layout.activity_app_analysis_login_demo);
 
         Logger.getInstance().trackOperation(
                 LoggerParser.getLocationFromThrowable(new Throwable()),
@@ -49,12 +48,12 @@ public class AppAnalysisExampleLoginActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                DialogUtil.createNormalDialogWithThreeButton(AppAnalysisExampleLoginActivity.this,
+                DialogUtil.createNormalDialogWithThreeButton(AppAnalysisLoginDemoActivity.this,
                         getString(R.string.alert_title), getString(R.string.alert_message), false, getString(R.string.send_with_id), getString(R.string.alert_cancel),  getString(R.string.send_without_id),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Logger.getInstance().sendAppAnalysisReportByEmail(AppAnalysisExampleLoginActivity.this, false, Constants.TEST_USER_ID);
+                                Logger.getInstance().sendAppAnalysisReportByEmail(AppAnalysisLoginDemoActivity.this, false, Constants.TEST_USER_ID);
                             }
                         }, new DialogInterface.OnClickListener() {
                             @Override
@@ -64,7 +63,7 @@ public class AppAnalysisExampleLoginActivity extends Activity {
                         }, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Logger.getInstance().sendAppAnalysisReportByEmail(AppAnalysisExampleLoginActivity.this, true, Constants.TEST_USER_ID);
+                                Logger.getInstance().sendAppAnalysisReportByEmail(AppAnalysisLoginDemoActivity.this, true, Constants.TEST_USER_ID);
                             }
                         });
             }
@@ -89,12 +88,12 @@ public class AppAnalysisExampleLoginActivity extends Activity {
                 Logger.getInstance().trackOperation(
                         LoggerParser.getLocationFromThrowable(new Throwable()),
                         LoggerProperty.EVENT_GROUP_LOGIN,
-                        LoggerProperty.OPERATION_TYPE.C,
+                        LoggerProperty.OPERATION_TYPE.CLICK,
                         "click buttonLogin to login"
                 );
 
                 if(!checkInput()) {
-                    ToastUtil.showShortToastNormal(AppAnalysisExampleLoginActivity.this, "check id or password");
+                    ToastUtil.showShortToastNormal(AppAnalysisLoginDemoActivity.this, "check id or password");
                     return;
                 }
 
@@ -151,7 +150,7 @@ public class AppAnalysisExampleLoginActivity extends Activity {
                     operationRelateID,
                     ""
             );
-            ToastUtil.showShortToastNormal(AppAnalysisExampleLoginActivity.this, "id not right");
+            ToastUtil.showShortToastNormal(AppAnalysisLoginDemoActivity.this, "id not right");
             return;
         }
 
@@ -165,12 +164,12 @@ public class AppAnalysisExampleLoginActivity extends Activity {
                     operationRelateID,
                     ""
             );
-            ToastUtil.showShortToastNormal(AppAnalysisExampleLoginActivity.this, "id not right");
+            ToastUtil.showShortToastNormal(AppAnalysisLoginDemoActivity.this, "id not right");
             return;
         }
 
 
-        ToastUtil.showShortToastNormal(AppAnalysisExampleLoginActivity.this, "login success");
+        ToastUtil.showShortToastNormal(AppAnalysisLoginDemoActivity.this, "login success");
 
         ThreadUtil.startThread(new Runnable() {
 
@@ -181,7 +180,7 @@ public class AppAnalysisExampleLoginActivity extends Activity {
                     @Override
                     public void run() {
 
-                        startActivity(new Intent(AppAnalysisExampleLoginActivity.this, AppAnalysisExampleHomeActivity.class));
+                        startActivity(new Intent(AppAnalysisLoginDemoActivity.this, AppAnalysisHomeDemoActivity.class));
 
                     }
                 });
