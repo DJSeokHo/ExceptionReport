@@ -16,7 +16,13 @@ import com.swein.appanalysisreport.util.email.EmailUtil;
 import com.swein.appanalysisreport.util.thread.ThreadUtil;
 import com.swein.appanalysisreport.util.uuid.Installation;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.List;
 
 /**
  * how to check report in your SQLite Client
@@ -54,10 +60,9 @@ public class Logger {
         this.context = context;
         CrashExceptionReportHandler.getInstance().init(context);
 
-        open();
-
-        AppAnalysisReportDBController appAnalysisReportDBController = new AppAnalysisReportDBController(context);
-        appAnalysisReportDBController.deleteDBFileToOutsideFolderForTemp();
+        if(appAnalysisReportDBController == null) {
+            appAnalysisReportDBController = new AppAnalysisReportDBController(context);
+        }
 
         saveAppAnalysisIntoDB(new DeviceUserData(
                 Installation.id(context),
@@ -99,21 +104,84 @@ public class Logger {
 
     public void sendAppAnalysisReportByEmail(Context context, boolean anonymous, String userID) {
 
-        File file = new AppAnalysisReportDBController(context).copyDBFileToOutsideFolderForTemp();
+        ThreadUtil.startThread(new Runnable() {
+            @Override
+            public void run() {
 
-        String title = LoggerProperty.APP_ANALYSIS_REPORT_TITLE;
+                try {
 
-        String content;
+                    File folder = new File(LoggerProperty.REPORT_FILE_PATH);
+                    if(!folder.exists()) {
+                        folder.mkdir();
+                    }
 
-        if(anonymous) {
-            content = LoggerProperty.APP_ANALYSIS_REPORT_CONTENT;
-        }
-        else {
-            content = userID + " " + LoggerProperty.APP_ANALYSIS_REPORT_CONTENT;
-        }
+                    File file = new File(LoggerProperty.REPORT_FILE_PATH, LoggerProperty.REPORT_FILE_NAME);
+                    if(file.exists()) {
+                        boolean success = file.delete();
+                        if(!success) {
+                            return;
+                        }
+                    }
 
-        EmailUtil.mailToWithFile(context, file, new String[]{LoggerProperty.EMAIL_RECEIVER, LoggerProperty.EMAIL_RECEIVER},
-                title, content);
+                    try {
+                        file.createNewFile();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    FileOutputStream fileOutputStream;
+                    BufferedWriter bufferedWriter;
+
+                    fileOutputStream = new FileOutputStream(file);
+                    bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+
+                    List<DeviceUserData> deviceUserDataList = appAnalysisReportDBController.getDeviceUserDataList();
+                    for(DeviceUserData deviceUserData : deviceUserDataList) {
+                        bufferedWriter.write(deviceUserData.toReport());
+                    }
+
+                    List<OperationData> operationDataList = appAnalysisReportDBController.getOperationDataList();
+                    for(OperationData operationData : operationDataList) {
+                        bufferedWriter.write(operationData.toReport());
+                    }
+
+                    List<ExceptionData> exceptionDataList = appAnalysisReportDBController.getExceptionDataList();
+                    for(ExceptionData exceptionData : exceptionDataList) {
+                        bufferedWriter.write(exceptionData.toReport());
+                    }
+
+                    bufferedWriter.close();
+                    fileOutputStream.close();
+
+                    ThreadUtil.startUIThread(0, new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String title = LoggerProperty.APP_ANALYSIS_REPORT_TITLE;
+
+                            String content;
+
+                            if(anonymous) {
+                                content = LoggerProperty.APP_ANALYSIS_REPORT_CONTENT;
+                            }
+                            else {
+                                content = userID + " " + LoggerProperty.APP_ANALYSIS_REPORT_CONTENT;
+                            }
+
+                            EmailUtil.mailToWithFile(context, file, new String[]{LoggerProperty.EMAIL_RECEIVER, LoggerProperty.EMAIL_RECEIVER},
+                                    title, content);
+
+                        }
+                    });
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 
@@ -143,26 +211,6 @@ public class Logger {
                 }
             });
         }
-
-    }
-
-    private void open() {
-
-        if(appAnalysisReportDBController != null) {
-            close();
-        }
-
-        appAnalysisReportDBController = new AppAnalysisReportDBController(context);
-        appAnalysisReportDBController.openDB();
-    }
-
-    public void close() {
-
-        if(appAnalysisReportDBController != null) {
-            appAnalysisReportDBController.closeDataBase();
-            appAnalysisReportDBController = null;
-        }
-
     }
 
     public void clear() {

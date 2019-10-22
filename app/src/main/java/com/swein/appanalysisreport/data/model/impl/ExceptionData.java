@@ -6,6 +6,7 @@ import com.swein.appanalysisreport.util.uuid.UUIDUtil;
 
 public class ExceptionData implements AppAnalysisData {
 
+    private final static String UUID_TITLE = "记录编号: ";
     private final static String DATE_TIME_TITLE = "异常发生的时间: ";
     private final static String LOCATION_TITLE = "异常发生的位置: ";
     private final static String MESSAGE_TITLE = "异常信息: ";
@@ -44,13 +45,13 @@ public class ExceptionData implements AppAnalysisData {
         this.note = note;
     }
 
-    public ExceptionData(String uuid, String dateTime, String location, String exceptionMessage, String eventGroup, String operationRelateID, String note) {
+    public ExceptionData(String uuid, String operationRelateID, String eventGroup, String location, String exceptionMessage, String dateTime, String note) {
         this.uuid = uuid;
-        this.dateTime = dateTime;
+        this.operationRelateID = operationRelateID;
+        this.eventGroup = eventGroup;
         this.location = location;
         this.exceptionMessage = exceptionMessage;
-        this.eventGroup = eventGroup;
-        this.operationRelateID = operationRelateID;
+        this.dateTime = dateTime;
         this.note = note;
     }
 
@@ -62,12 +63,15 @@ public class ExceptionData implements AppAnalysisData {
     @Override
     public String toReport() {
 
-        return DATE_TIME_TITLE + dateTime + "\n" +
-                LOCATION_TITLE + location + "\n" +
-                MESSAGE_TITLE + exceptionMessage + "\n" +
-                NOTE_TITLE + note + "\n" +
-                OPERATION_RELATE_ID_TITLE + operationRelateID + "\n" +
-                EVENT_GROUP_TITLE + eventGroup;
+        return
+                UUID_TITLE + uuid + " " +
+                OPERATION_RELATE_ID_TITLE + operationRelateID + " " +
+                EVENT_GROUP_TITLE + eventGroup + " " +
+                LOCATION_TITLE + location + " " +
+                MESSAGE_TITLE + exceptionMessage + " " +
+                DATE_TIME_TITLE + dateTime + " " +
+                NOTE_TITLE + note + " " +
+                "\r\n\r\n";
     }
 
 }

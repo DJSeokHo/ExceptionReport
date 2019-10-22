@@ -1,12 +1,18 @@
 package com.swein.appanalysisreport.demo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.swein.appanalysisreport.R;
 import com.swein.appanalysisreport.constants.Constants;
@@ -18,6 +24,15 @@ import com.swein.appanalysisreport.util.thread.ThreadUtil;
 import com.swein.appanalysisreport.util.toast.ToastUtil;
 
 public class AppAnalysisLoginDemoActivity extends Activity {
+
+
+    private final static int REQUEST_PERMISSIONS_CODE = 101;
+    private static String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
+
+
 
     private EditText editTextID;
     private EditText editTextPassword;
@@ -32,6 +47,14 @@ public class AppAnalysisLoginDemoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_analysis_login_demo);
+
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSIONS_CODE);
+        }
+
 
         Logger.getInstance().trackOperation(
                 LoggerParser.getLocationFromThrowable(new Throwable()),
@@ -164,7 +187,7 @@ public class AppAnalysisLoginDemoActivity extends Activity {
                     operationRelateID,
                     ""
             );
-            ToastUtil.showShortToastNormal(AppAnalysisLoginDemoActivity.this, "id not right");
+            ToastUtil.showShortToastNormal(AppAnalysisLoginDemoActivity.this, "password not right");
             return;
         }
 
@@ -188,5 +211,19 @@ public class AppAnalysisLoginDemoActivity extends Activity {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(REQUEST_PERMISSIONS_CODE == requestCode) {
+            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                for (int grantResult : grantResults) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        finish();
+                    }
+                }
+            }
+        }
+    }
 
 }

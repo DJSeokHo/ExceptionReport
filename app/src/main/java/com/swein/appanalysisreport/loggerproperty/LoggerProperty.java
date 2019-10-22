@@ -9,8 +9,10 @@ public class LoggerProperty {
     public final static String APP_ANALYSIS_REPORT_TITLE = "app 分析日志";
     public final static String APP_ANALYSIS_REPORT_CONTENT = "用户反馈的日志";
 
-    public final static String DB_FILE_TEMP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.AppNameAnalysisReportTemp/";
+//    public final static String DB_FILE_TEMP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.AppNameAnalysisReportTemp/";
     public final static String DB_FILE_TEMP_NAME = "AppNameAppAnalysisReport.db";
+    public final static String REPORT_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/.Report/";
+    public final static String REPORT_FILE_NAME = "Report.txt";
 
     // 接收app 分析日志的开发的个人邮箱或者公司邮箱，这里换成你的即可
     public final static String EMAIL_RECEIVER = "djseokho@gmail.com";

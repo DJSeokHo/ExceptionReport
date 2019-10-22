@@ -8,6 +8,7 @@ import com.swein.appanalysisreport.util.uuid.UUIDUtil;
 
 public class OperationData implements AppAnalysisData {
 
+    private final static String UUID_TITLE = "记录编号: ";
     private final static String LOCATION_TITLE = "位置: ";
     private final static String DATE_TIME_TITLE = "时间: ";
     private final static String OPERATION_TYPE_TITLE = "操作类型: ";
@@ -35,19 +36,19 @@ public class OperationData implements AppAnalysisData {
 
     public OperationData(String location, String eventGroup, LoggerProperty.OPERATION_TYPE operationType, String note) {
         this.uuid = UUIDUtil.getUUIDString();
-        this.dateTime = DateUtil.getCurrentDateTimeString();
-        this.location = location;
         this.eventGroup = eventGroup;
         this.operationType = operationType;
+        this.location = location;
+        this.dateTime = DateUtil.getCurrentDateTimeString();
         this.note = note;
     }
 
-    public OperationData(String uuid, String location, String dateTime, String eventGroup, LoggerProperty.OPERATION_TYPE operationType, String note) {
+    public OperationData(String uuid, String eventGroup, LoggerProperty.OPERATION_TYPE operationType, String location, String dateTime, String note) {
         this.uuid = uuid;
-        this.location = location;
-        this.dateTime = dateTime;
         this.eventGroup = eventGroup;
         this.operationType = operationType;
+        this.location = location;
+        this.dateTime = dateTime;
         this.note = note;
     }
 
@@ -59,11 +60,14 @@ public class OperationData implements AppAnalysisData {
     @Override
     public String toReport() {
 
-        return LOCATION_TITLE + location + "\n" +
-                DATE_TIME_TITLE + dateTime + "\n" +
-                OPERATION_TYPE_TITLE + getOperationTypeString(operationType) + "\n" +
-                EVENT_GROUP_TITLE + eventGroup + "\n" +
-                NOTE_TITLE + note;
+        return
+                UUID_TITLE + uuid + " " +
+                EVENT_GROUP_TITLE + eventGroup + " " +
+                OPERATION_TYPE_TITLE + getOperationTypeString(operationType) + " " +
+                LOCATION_TITLE + location + " " +
+                DATE_TIME_TITLE + dateTime + " " +
+                NOTE_TITLE + note + " " +
+                "\r\n\r\n";
 
     }
 

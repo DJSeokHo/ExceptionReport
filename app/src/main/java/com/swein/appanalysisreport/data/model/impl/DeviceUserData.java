@@ -8,7 +8,7 @@ public class DeviceUserData implements AppAnalysisData {
     private final static String DEVICE_UUID_TITLE = "手机的 UUID: ";
     private final static String DEVICE_MODEL_TITLE = "手机型号: ";
     private final static String OS_VERSION_TITLE = "系统版本: ";
-    private final static String APP_NAME_TITLE = "App名字: ";
+    private final static String APP_PACKAGE_NAME_TITLE = "App包名: ";
     private final static String APP_VERSION_TITLE = "App版本: ";
     private final static String OTHER_TITLE = "备注: ";
 
@@ -21,8 +21,8 @@ public class DeviceUserData implements AppAnalysisData {
     /* 系统版本 */
     public String osVersion = "";
 
-    /* App名字 */
-    public String appName = "";
+    /* App包名 */
+    public String appPackageName = "";
 
     /* App版本 */
     public String appVersion = "";
@@ -31,29 +31,30 @@ public class DeviceUserData implements AppAnalysisData {
     public String other = "";
 
 
-    public DeviceUserData(String deviceUUID, String deviceModel, String osVersion, String appName, String appVersion, String other) {
+    public DeviceUserData(String deviceUUID, String deviceModel, String osVersion, String appPackageName, String appVersion, String other) {
         this.deviceUUID = deviceUUID;
         this.deviceModel = deviceModel;
         this.osVersion = osVersion;
-        this.appName = appName;
+        this.appPackageName = appPackageName;
         this.appVersion = appVersion;
         this.other = other;
     }
 
     @Override
     public String toString() {
-        return deviceUUID + " " + deviceModel + " " + osVersion + " " + appName + " " + appVersion + " " + other;
+        return deviceUUID + " " + deviceModel + " " + osVersion + " " + appPackageName + " " + appVersion + " " + other;
     }
 
     @Override
     public String toReport() {
 
-        return DEVICE_UUID_TITLE + deviceUUID + "\n" +
-                DEVICE_MODEL_TITLE + deviceModel + "\n" +
-                OS_VERSION_TITLE + osVersion + "\n" +
-                APP_NAME_TITLE + appName + "\n" +
-                APP_VERSION_TITLE + appVersion + "\n" +
-                OTHER_TITLE + other;
+        return
+                DEVICE_UUID_TITLE + deviceUUID + "\r\n" +
+                DEVICE_MODEL_TITLE + deviceModel + "\r\n" +
+                OS_VERSION_TITLE + osVersion + "\r\n" +
+                APP_PACKAGE_NAME_TITLE + appPackageName + "\r\n" +
+                APP_VERSION_TITLE + appVersion + "\r\n" +
+                OTHER_TITLE + other + "\r\n\r\n";
     }
 
 }

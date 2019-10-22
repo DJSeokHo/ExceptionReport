@@ -34,6 +34,9 @@
         android:orientation="vertical">
 
         <EditText
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:padding="10dp"
             android:id="@+id/editTextID"
             android:layout_width="match_parent"
@@ -49,6 +52,9 @@
             />
 
         <EditText
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
             android:padding="10dp"
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
