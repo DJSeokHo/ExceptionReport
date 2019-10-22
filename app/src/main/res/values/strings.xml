@@ -19,4 +19,6 @@
 
     <string name="report_reset_db">清除统计分析</string>
     <string name="report_exit_app">退出app</string>
+
+    <string name="report_is_null">没有任何统计记录或者被清空</string>
 </resources>

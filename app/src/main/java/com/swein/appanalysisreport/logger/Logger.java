@@ -3,6 +3,7 @@ package com.swein.appanalysisreport.logger;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.swein.appanalysisreport.R;
 import com.swein.appanalysisreport.applicationhandler.CrashExceptionReportHandler;
 import com.swein.appanalysisreport.data.db.AppAnalysisReportDBController;
 import com.swein.appanalysisreport.data.model.AppAnalysisData;
@@ -13,7 +14,9 @@ import com.swein.appanalysisreport.loggerproperty.LoggerProperty;
 import com.swein.appanalysisreport.util.appinfo.AppInfoUtil;
 import com.swein.appanalysisreport.util.device.DeviceInfoUtil;
 import com.swein.appanalysisreport.util.email.EmailUtil;
+import com.swein.appanalysisreport.util.queuemanager.QueueManager;
 import com.swein.appanalysisreport.util.thread.ThreadUtil;
+import com.swein.appanalysisreport.util.toast.ToastUtil;
 import com.swein.appanalysisreport.util.uuid.Installation;
 
 import java.io.BufferedWriter;
@@ -155,9 +158,16 @@ public class Logger {
                     bufferedWriter.close();
                     fileOutputStream.close();
 
+
+
                     ThreadUtil.startUIThread(0, new Runnable() {
                         @Override
                         public void run() {
+
+                            if(operationDataList.isEmpty() && exceptionDataList.isEmpty()) {
+                                ToastUtil.showShortToastNormal(context, context.getString(R.string.report_is_null));
+                                return;
+                            }
 
                             String title = LoggerProperty.APP_ANALYSIS_REPORT_TITLE;
 
@@ -187,30 +197,22 @@ public class Logger {
 
     private void saveAppAnalysisIntoDB(final AppAnalysisData appAnalysisData) {
 
-        if(appAnalysisData instanceof DeviceUserData) {
-            ThreadUtil.startThread(new Runnable() {
-                @Override
-                public void run() {
+        QueueManager.getInstance().addTask(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if(appAnalysisData instanceof DeviceUserData) {
                     appAnalysisReportDBController.insertDeviceUser((DeviceUserData) appAnalysisData);
                 }
-            });
-        }
-        else if(appAnalysisData instanceof OperationData) {
-            ThreadUtil.startThread(new Runnable() {
-                @Override
-                public void run() {
+                else if(appAnalysisData instanceof OperationData) {
                     appAnalysisReportDBController.insertOperation((OperationData) appAnalysisData);
                 }
-            });
-        }
-        else if(appAnalysisData instanceof ExceptionData) {
-            ThreadUtil.startThread(new Runnable() {
-                @Override
-                public void run() {
+                else if(appAnalysisData instanceof ExceptionData) {
                     appAnalysisReportDBController.insertException((ExceptionData) appAnalysisData);
                 }
-            });
-        }
+            }
+        });
     }
 
     public void clear() {
